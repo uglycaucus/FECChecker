@@ -30,6 +30,7 @@ user_name <- str_split(user$name, " ") %>%
 user_location <- user$location
 
 tibble(tweet_id = x$id,
+       name = user$name,
        first_name = user_name[1], 
        last_name = user_name[length(user_name)],
        location = user_location,
@@ -46,21 +47,24 @@ account_mentions %>%
 }
 
 
-build_fec_request <- function(name, location){
+build_fec_request <- function(data){
+  
+  name <- data$name
+  location <- data$location
+  
   
   results <- GET(url = modify_url('https://api.open.fec.gov/v1/schedules/schedule_a/',
                       query = list(contributor_type = "individual",
-                                   contributor_state = location,
+                                  # contributor_state = location,
                                    contributor_name = name,
                                    api_key = key_get("fec_checker", username = "fec_api_key"))
       )) %>%
     content() %>%
     .$results 
   
+  if(length(results) > 0){
   
-
-  
-  results %>%
+ results <- results %>%
     map(map, discard, .p = is.list) %>%
     map(flatten) %>%
     map(discard, .p = is.list) %>%
@@ -75,14 +79,24 @@ build_fec_request <- function(name, location){
                      contributor_employer,
                      contribution_receipt_date,
                      contribution_receipt_amount) %>%
-    group_by(campaign_name, contributor_first_name, contributor_last_name, memo_text) %>%
-    summarize(total = sum(contribution_receipt_amount)) %>% arrange(desc(total)) %>%
+    group_by(campaign_name, contributor_first_name, 
+             contributor_last_name, memo_text) %>%
+    summarize(total = sum(contribution_receipt_amount)) %>% 
+      arrange(desc(total)) 
+      
+ 
+ data %>% 
+   mutate(results = list(results)) %>%
     return()
+ 
+  } else {
+    return("None found.")
+  }
   
-
 }
 
-
+get_menchies() %>% 
+  map(build_fec_request)
 
 
 
