@@ -82,7 +82,8 @@ build_fec_request <- function(data){
     group_by(campaign_name, contributor_first_name, 
              contributor_last_name, memo_text) %>%
     summarize(total = sum(contribution_receipt_amount)) %>% 
-      arrange(desc(total)) 
+      arrange(desc(total)) %>%
+   slice(1:5)
       
  
  data %>% 
@@ -95,9 +96,11 @@ build_fec_request <- function(data){
   
 }
 
-get_menchies() %>% 
+donations <- get_menchies() %>% 
   map(build_fec_request)
 
 
+
+donations[[1]]$results
 
 

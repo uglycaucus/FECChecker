@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "4144135408",
     "id" : "B73602AB",
-    "lastKnownWriteTime" : 1586795995,
-    "last_content_update" : 1586795995328,
+    "lastKnownWriteTime" : 1586796864,
+    "last_content_update" : 1586796864566,
     "path" : "~/Documents/GitHub/FECChecker/fec_checker.R",
     "project_path" : "fec_checker.R",
     "properties" : {
-        "cursorPosition" : "88,38",
-        "scrollLine" : "83"
+        "cursorPosition" : "104,0",
+        "scrollLine" : "86"
     },
     "read_only" : false,
     "read_only_alternatives" : [
