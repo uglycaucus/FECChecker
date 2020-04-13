@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586793641257.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B73602AB",
+    "lastKnownWriteTime" : 1586794731,
+    "last_content_update" : 1586794731773,
+    "path" : "~/Documents/GitHub/FECChecker/fec_checker.R",
+    "project_path" : "fec_checker.R",
+    "properties" : {
+        "cursorPosition" : "15,30",
+        "scrollLine" : "4"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
