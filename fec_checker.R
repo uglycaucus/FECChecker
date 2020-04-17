@@ -148,6 +148,12 @@ results <- results %>%
 
 reply_with_image <- function(data){
  
+  if(is.null(data)){
+    
+    stop()
+    
+  }
+  
   
   if(data$status == "success"){
   
@@ -190,11 +196,8 @@ reply_with_image <- function(data){
   
 }
 
-data <- get_menchies() %>% 
-  bind_rows() %>%
-  split(seq(nrow(.))) %>%
-  map(build_fec_request) %>%
-  map(reply_with_image)
+
+  
 
 
 
