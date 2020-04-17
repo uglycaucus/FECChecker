@@ -110,7 +110,7 @@ if(length(results) > 0){
  if(data$requests != ""){
   
  results <- results %>%
-     filter(str_detect(toupper(campaign_name), toupper(data$requests)))
+     filter(str_detect(toupper(campaign_name), toupper(data$requests)) | str_detect(toupper(memo_text), toupper(data$requests)))
   
 } 
  
