@@ -96,30 +96,50 @@ if(length(results) > 0){
     map(purrr::flatten) %>%
     map(discard, .p = is.list) %>%
     map(compact) %>%
-    bind_rows() %>% select(recipient_committee_designation, 
+    bind_rows() %>% select(contains("recipient_committee_designation"), 
                            campaign_name = name,
-                           memo_text,
-                           affiliated_committee_name,
-                           committee_id,
-                           contributor_first_name, 
-                     contributor_last_name, 
-                     contributor_employer,
-                     contribution_receipt_date,
-                     contribution_receipt_amount)
+                           date = contribution_receipt_date,
+                           state = contributor_state,
+                           contains("recipient_committee_designation"),
+                           contains("memo_text"),
+                           contains("affiliated_committee_name"),
+                           contains("committee_id"),
+                           contains("contributor_first_name"), 
+                           contains("contributor_last_name"), 
+                           contains("contributor_employer"),
+                           contains("contribution_receipt_date"),
+                           contains("contribution_receipt_amount")) 
+ 
+ 
+ if(!max(str_detect(names(results), "memo_text"))){
+   
+   results <- results %>% 
+     mutate(memo_text = "")
+   
+ }
+ 
+ 
 
- if(data$requests != ""){
+ if(data$requests != "" & as.logical(max(str_detect(names(results), "memo_text")))){
   
  results <- results %>%
-     filter(str_detect(toupper(campaign_name), toupper(data$requests)) | str_detect(toupper(memo_text), toupper(data$requests)))
+     filter(str_detect(toupper(campaign_name), toupper(data$requests)))
   
-} 
+ } else if(data$requests != "" & isTRUE(as.logical(max(str_detect(names(results), "memo_text"))))){
+  
+   results <- results %>%
+     filter(str_detect(toupper(campaign_name), toupper(data$requests)) | str_detect(toupper(memo_text), toupper(data$requests)))
+   
+   
+}
  
 if(nrow(results) > 0){
    
 results <- results %>%
-    group_by(campaign_name, contributor_first_name, 
+    group_by(campaign_name, state, contributor_first_name, 
              contributor_last_name, memo_text) %>%
-    summarize(total = sum(contribution_receipt_amount)) %>% 
+    summarize(total = sum(contribution_receipt_amount),
+              date = min(date)) %>% 
       arrange(desc(total)) %>%
    ungroup() %>%
    slice(1:5)
@@ -164,9 +184,13 @@ reply_with_image <- function(data){
                     Amount = paste0("$", total),
                     Note = str_trunc(str_remove(memo_text, "EARMARKED FOR "), 20, side = "right"),
                     Campaign = str_trunc(campaign_name, 20, side = "right")) %>%
-             select(Name, Campaign, Note, Amount) %>%
-             grid.table(),
-           device = "png")
+             select(Name, State = state, Campaign, Note, Amount, `First Donation` = date) %>%
+             grid.table(heights = rep(unit((9*.67)/nrow(.), "inches"), times = nrow(.)),
+                        widths = rep(unit((16*.67)/ncol(.), "inches"), times = ncol(.)),
+                        theme = ttheme_minimal(base_size = 10, padding = unit(c(1,1,1,1), "cm"))),
+           device = "png",
+           height = (9*.67)+.8,
+           width = (16*.67)+.8)
   
   
     
