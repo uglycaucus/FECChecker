@@ -1,8 +1,8 @@
 # FEC Checker - A Twitter bot to expose fake friends
 
-Ever find yourself being told authoritatively by some Twitter pundit that you are personally responsible for making sure some lesser of two evils candidate wins, even if you spent the last 6-9 months grinding it out for a better candidate in the primaries? Want to see if they actually have any skin in the game? 
+Ever wonder wanted to get more insight into the potential biases of media commentators on Twitter?
 
-Just tag @CheckerFEC in the comments and we'll search the Twitter user's name in the FEC individual contribution records since 2014. Obviously, this won't work for people under a pseudonym, so this is mostly intended for blue checks. 
+Just tag @CheckerFEC in the comments and we'll search the Twitter user's name in the FEC individual contribution records since 2014. Obviously, this won't work for people under a pseudonym, so this is mostly intended for verified users.
 
 ## Check if someone has donated to a specific candidate
 
